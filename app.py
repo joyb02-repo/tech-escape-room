@@ -1,9 +1,16 @@
 import streamlit as st
+import hashlib
 
-# Set page configuration with an immersive dark theme/vibe
+# One-way hashing helper function to hide answers from source code
+def check_hash(user_input, correct_hash):
+    # Convert input to uppercase, remove spaces, and hash it
+    scrambled_input = hashlib.sha256(user_input.strip().upper().encode()).hexdigest()
+    return scrambled_input == correct_hash
+
+# Set page configuration
 st.set_page_config(page_title="Digital Escape Room", page_icon="🔐", layout="centered")
 
-# Custom CSS styling for the digital escape room atmosphere
+# Immersive dark theme CSS styling
 st.markdown("""
     <style>
     .main { background-color: #0e1117; }
@@ -15,11 +22,9 @@ st.markdown("""
         width: 100%; transition: 0.3s;
     }
     .stButton>button:hover { background-color: #00ff66; color: #0e1117; }
-    .success-text { color: #2ecc71; font-weight: bold; font-family: 'Courier New', monospace; }
     </style>
 """, unsafe_allow_html=True)
 
-# Initialize Session State for tracking progress
 if "stage" not in st.session_state:
     st.session_state.stage = 1
 
@@ -39,24 +44,22 @@ if st.session_state.stage == 1:
     Hint Table: X=T, S=H, B=E, P=P, O=O, W=W, G=S, T=I, U=G, H=N
     """, language="text")
     
-    st.info("💡 Hint: Decrypt the very first word (`X S B`) to confirm your pattern, then decode the second word (`P S Q O W`) for your access key!")
-    
-    user_input = st.text_input("Enter the decoded second word (All Caps):", key="stage1_input").strip().upper()
+    user_input = st.text_input("Enter the decoded second word:", key="stage1_input")
     
     if st.button("Submit Code 🔑", key="btn1"):
-        # "P S Q O W" decodes to "POWER"
-        if user_input == "POWER":
+        # Scrambled fingerprint of "POWER"
+        if check_hash(user_input, "2f8263cf8bb82ec7da117c2be6d11a8080f83359d48b1116c905327b73840e79"):
             st.session_state.stage = 2
             st.rerun()
         else:
-            st.error("❌ Access Denied. The system remains locked. Check your cipher mapping.")
+            st.error("❌ Access Denied. The system remains locked.")
 
 # =========================================================================
 # STAGE 2: THE LOGIC GATE MAZE
 # =========================================================================
 elif st.session_state.stage == 2:
     st.header("🧩 Stage 2: The Logic Gate Circuit")
-    st.write("The backup power grid layout is failing. Trace the binary signals down through the network gates to evaluate the final system output state.")
+    st.write("Trace the binary signals down through the network gates to evaluate the final system output state.")
     
     st.code("""
     [Input A: 1] ───┐
@@ -67,16 +70,11 @@ elif st.session_state.stage == 2:
     [Input C: 1] ───► [ NOT Gate ] ───────┘
     """, language="text")
     
-    st.markdown("""
-    * **AND Gate:** Outputs `1` only if *both* inputs are 1.
-    * **OR Gate:** Outputs `1` if *at least one* input is 1.
-    * **NOT Gate:** Flips the incoming signal (`1` becomes `0`, `0` becomes `1`).
-    """)
-    
-    user_input = st.text_input("What is the final Output digit (0 or 1)?:", key="stage2_input").strip()
+    user_input = st.text_input("What is the final Output digit (0 or 1)?:", key="stage2_input")
     
     if st.button("Submit Signal 🔑", key="btn2"):
-        if user_input == "0":
+        # Scrambled fingerprint of "0"
+        if check_hash(user_input, "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"):
             st.session_state.stage = 3
             st.rerun()
         else:
@@ -87,28 +85,18 @@ elif st.session_state.stage == 2:
 # =========================================================================
 elif st.session_state.stage == 3:
     st.header("💾 Stage 3: Raw Memory Dump")
-    st.write("A hidden directory requires a 4-letter password string. Decipher these binary memory bytes into readable characters.")
+    st.write("A hidden directory requires a 4-letter password string. Decipher these binary memory bytes.")
     
     st.code("""
-    Byte 1: 01000011
-    Byte 2: 01001111
-    Byte 3: 01000100
-    Byte 4: 01000101
+    Byte 1: 01000011  |  Byte 2: 01001111  |  Byte 3: 01000100  |  Byte 4: 01000101
     """, language="text")
+    st.markdown("*(Note: Capital letter 'A' starts at ASCII decimal value 65)*")
     
-    st.markdown("""
-    **ASCII Translation Guide:**
-    * `01000011` = 67 in decimal
-    * `01001111` = 79 in decimal
-    * `01000100` = 68 in decimal
-    * `01000101` = 69 in decimal
-    *(Note: Capital letter 'A' starts at value 65, 'B' is 66, 'C' is 67, etc.)*
-    """)
-    
-    user_input = st.text_input("Enter the 4-letter decoded password:", key="stage3_input").strip().upper()
+    user_input = st.text_input("Enter the 4-letter decoded password:", key="stage3_input")
     
     if st.button("Bypass Firewall 🔑", key="btn3"):
-        if user_input == "CODE":
+        # Scrambled fingerprint of "CODE"
+        if check_hash(user_input, "9a661b0a52df03aa6240292797e88f00072b49c001cbe3d007ec1dfb1b60f588"):
             st.session_state.stage = 4
             st.rerun()
         else:
@@ -119,24 +107,23 @@ elif st.session_state.stage == 3:
 # =========================================================================
 elif st.session_state.stage == 4:
     st.header("🐛 Stage 4: Debug the Mainframe")
-    st.write("The lock mechanism code contains a structural syntax error. Find out what missing character is breaking the program execution.")
+    st.write("What single punctuation character is missing from lines 1 and 2 to make this python code valid?")
     
     st.code("""
     def check_password(password)
         if len(password) < 8
             print("Password too short!")
-        else:
-            print("Password secure.")
     """, language="python")
     
-    user_input = st.text_input("What single punctuation character is missing from lines 1 and 2?", key="stage4_input").strip()
+    user_input = st.text_input("Missing symbol:", key="stage4_input")
     
     if st.button("Execute Patch 🛠️", key="btn4"):
-        if user_input == ":":
+        # Scrambled fingerprint of ":"
+        if check_hash(user_input, "76f0d14b4369a473468087920bb6148303f8fcb151bf99994c979cf7b198889a"):
             st.session_state.stage = 5
             st.rerun()
         else:
-            st.error("❌ Compilation failure. The bug is still crashing the lock sequence.")
+            st.error("❌ Compilation failure. Code bug is still present.")
 
 # =========================================================================
 # ESCAPE SUCCESS
@@ -145,7 +132,6 @@ elif st.session_state.stage == 5:
     st.balloons()
     st.success("🎉 ESCAPE SUCCESSFUL!")
     st.markdown("<h3 style='text-align: center;'>SYSTEM ACCESS RESTORED</h3>", unsafe_allow_html=True)
-    st.write("Congratulations! You bypassed all firewall barriers, traced the circuits, corrected the script syntax flaws, and cracked the room!")
     
     if st.button("Reset System Simulator 🔁"):
         st.session_state.stage = 1
