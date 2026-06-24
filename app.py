@@ -75,19 +75,12 @@ st.markdown("""
         color: #00f3ff !important;
         font-weight: 800 !important;
         font-family: 'Courier New', monospace;
+        display: block;
+        margin-bottom: 8px;
     }
     .cipher-value {
         color: #ffffff !important;
         font-family: 'Courier New', monospace;
-        white-space: pre-wrap;
-    }
-    .ascii-art {
-        color: #ffffff !important;
-        font-family: 'Courier New', monospace !important;
-        line-height: 1.4 !important;
-        margin: 0 !important;
-        white-space: pre !important;
-        overflow-x: auto;
     }
     
     /* Sleek Horizontal Navigation System */
@@ -193,7 +186,8 @@ with st.container(border=True):
         st.markdown('<div class="challenge-header"><strong>Challenge 1:</strong> <span>Encryption Matrix Override</span></div>', unsafe_allow_html=True)
         st.write("An intercepted system log contains a shifted string payload. Reconstruct the cipher framework to bypass.")
         
-        st.markdown('<div class="display-block"><span class="cipher-label">Cipher text:</span> <span class="cipher-value">Wkh sdvvzrug lv Srzhu</span></div>', unsafe_allow_html=True)
+        # Split wrapper completely protects spacing
+        st.markdown('<div class="display-block"><span class="cipher-label">Cipher text:</span><code class="cipher-value">Wkh sdvvzrug lv Srzhu</code></div>', unsafe_allow_html=True)
         
         st.markdown("""
         **Operational Diagnostic Feed:**
@@ -215,19 +209,16 @@ with st.container(border=True):
         st.markdown('<div class="challenge-header"><strong>Challenge 2:</strong> <span>Logic Circuit Topology Evaluation</span></div>', unsafe_allow_html=True)
         st.write("A power spike tripped the hardware safety relays. Calculate the end-terminal state of this logical path grid.")
         
-        # Wrapped inside a true preformatted block container to freeze character positioning
-        st.markdown("""
-        <div class="display-block">
-            <span class="cipher-label" style="display:block; margin-bottom:10px;">Circuit Map:</span>
-            <pre class="ascii-art">
+        # Native Streamlit code execution is alignment-safe outside of HTML strings
+        st.markdown('<div class="cipher-label" style="margin-bottom: -5px;">Circuit Map:</div>', unsafe_allow_html=True)
+        st.code("""
 [Input Node A: 1] ───┐
                     ├───► [ AND Gate ] ───┐
 [Input Node B: 0] ───┘                     │
                                            ├───► [ OR Gate ] ───► TERMINAL OUTPUT?
                                            │
-[Input Node C: 1] ───► [ NOT Gate ] ───────┘</pre>
-        </div>
-        """, unsafe_allow_html=True)
+[Input Node C: 1] ───► [ NOT Gate ] ───────┘
+        """, language="text")
         
         user_input = st.text_input("Enter the terminal bit registry output value (0 or 1):", key="in_2").strip()
         if st.button("VERIFY VOLTAGE LOGIC", key="b_2"):
@@ -242,7 +233,7 @@ with st.container(border=True):
         st.markdown('<div class="challenge-header"><strong>Challenge 3:</strong> <span>Core Hex/Binary Memory Trace</span></div>', unsafe_allow_html=True)
         st.write("The underlying storage sector is guarded by a 4-letter ASCII access phrase. Read the volatile system memory bank:")
         
-        st.markdown('<div class="display-block"><span class="cipher-label">Registers:</span> <span class="cipher-value">[01000011]  [01001111]  [01000100]  [01000101]</span></div>', unsafe_allow_html=True)
+        st.markdown('<div class="display-block"><span class="cipher-label">Registers:</span><code class="cipher-value">[01000011]  [01001111]  [01000100]  [01000101]</code></div>', unsafe_allow_html=True)
         
         st.caption("💡 Translation Manual: Array equivalents track to decimal positions: 67, 79, 68, 69. (Note: Upper-case letter 'A' maps to position index 65)")
         
@@ -259,15 +250,12 @@ with st.container(border=True):
         st.markdown('<div class="challenge-header"><strong>Challenge 4:</strong> <span>Diagnostic Script Compilation Fix</span></div>', unsafe_allow_html=True)
         st.write("The secondary firewall validation module has a minor syntax bug preventing launch. Fix the loop declaration syntax.")
         
-        st.markdown("""
-        <div class="display-block">
-            <span class="cipher-label" style="display:block; margin-bottom:10px;">Source Code Trace:</span>
-            <pre class="ascii-art" style="color: #a6b3cd !important;">
+        st.markdown('<div class="cipher-label" style="margin-bottom: -5px;">Source Code Trace:</div>', unsafe_allow_html=True)
+        st.code("""
 def check_password(password)
     if len(password) < 8
-        print("Password flagged: Weak security profile.")</pre>
-        </div>
-        """, unsafe_allow_html=True)
+        print("Password flagged: Weak security profile.")
+        """, language="python")
         
         user_input = st.text_input("Enter the missing token operator character from lines 1 and 2:", key="in_4").strip()
         if st.button("COMPILE SYNTAX OVERRIDE PATCH", key="b_4"):
@@ -282,7 +270,7 @@ def check_password(password)
         st.markdown('<div class="challenge-header"><strong>Challenge 5:</strong> <span>Database Query Isolation</span></div>', unsafe_allow_html=True)
         st.write("Isolate target entry anomalies from the core logs. Input the correct SQL keyword array statement to weed out redundant duplicate values.")
         
-        st.markdown('<div class="display-block"><span class="cipher-label">Query Syntax:</span> <span class="cipher-value">SELECT ___________ client_ip FROM mainframe_security_logs;</span></div>', unsafe_allow_html=True)
+        st.markdown('<div class="display-block"><span class="cipher-label">Query Syntax:</span><code class="cipher-value">SELECT ___________ client_ip FROM mainframe_security_logs;</code></div>', unsafe_allow_html=True)
         
         user_input = st.text_input("Complete the missing query operator pattern keyword string:", key="in_5", placeholder="Keyword...").strip().upper()
         if st.button("EXECUTE STRUCTURED DATA QUERY", key="b_5"):
