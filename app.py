@@ -252,7 +252,7 @@ with st.container(border=True):
         st.markdown('<span class="cipher-label">Registers:</span>', unsafe_allow_html=True)
         st.code("[01000011]  [01001111]  [01000100]  [01000101]", language="text")
         
-        st.caption("💡 Translation Manual: Array equivalents track to decimal positions: 67, 79, 68, 69. (Note: Upper-case letter 'A' maps to position index 65)")
+        st.caption("💡 Translation Manual: Array equivalents track to decimal positions: ##, ##, ##, ##. (Note: Upper-case letter 'A' maps to position index 65)")
         
         user_input = st.text_input("Translate extracted target string sequence:", key="in_3", disabled=st.session_state.stage_complete).strip().upper()
         
