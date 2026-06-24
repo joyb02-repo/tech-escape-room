@@ -63,10 +63,13 @@ st.markdown("""
         font-weight: 400 !important;
     }
 
-    /* Fixed Padding Gaps and Targeted Code Formatting Labels */
-    div[data-testid="stCodeBlock"] {
-        margin-bottom: 0px !important;
-        padding-bottom: 0px !important;
+    /* Target Code Formatting Panels and Labels */
+    .display-block {
+        background-color: #0d1421; 
+        padding: 16px; 
+        border-radius: 6px; 
+        margin-bottom: 15px;
+        border: 1px solid #1f2a3d;
     }
     .cipher-label {
         color: #00f3ff !important;
@@ -76,6 +79,15 @@ st.markdown("""
     .cipher-value {
         color: #ffffff !important;
         font-family: 'Courier New', monospace;
+        white-space: pre-wrap;
+    }
+    .ascii-art {
+        color: #ffffff !important;
+        font-family: 'Courier New', monospace !important;
+        line-height: 1.4 !important;
+        margin: 0 !important;
+        white-space: pre !important;
+        overflow-x: auto;
     }
     
     /* Sleek Horizontal Navigation System */
@@ -181,8 +193,7 @@ with st.container(border=True):
         st.markdown('<div class="challenge-header"><strong>Challenge 1:</strong> <span>Encryption Matrix Override</span></div>', unsafe_allow_html=True)
         st.write("An intercepted system log contains a shifted string payload. Reconstruct the cipher framework to bypass.")
         
-        # Styled block with custom color tags inside
-        st.markdown('<div style="background-color: #0d1421; padding: 12px 16px; border-radius: 6px; margin-bottom: 12px;"><span class="cipher-label">Cipher text:</span> <span class="cipher-value">Wkh sdvvzrug lv Srzhu</span></div>', unsafe_allow_html=True)
+        st.markdown('<div class="display-block"><span class="cipher-label">Cipher text:</span> <span class="cipher-value">Wkh sdvvzrug lv Srzhu</span></div>', unsafe_allow_html=True)
         
         st.markdown("""
         **Operational Diagnostic Feed:**
@@ -204,7 +215,19 @@ with st.container(border=True):
         st.markdown('<div class="challenge-header"><strong>Challenge 2:</strong> <span>Logic Circuit Topology Evaluation</span></div>', unsafe_allow_html=True)
         st.write("A power spike tripped the hardware safety relays. Calculate the end-terminal state of this logical path grid.")
         
-        st.markdown('<div style="background-color: #0d1421; padding: 12px 16px; border-radius: 6px; margin-bottom: 12px;"><span class="cipher-label">Circuit Map:</span><br><pre style="color:#ffffff; margin:0;">\n[Input Node A: 1] ───┐\n                    ├───► [ AND Gate ] ───┐\n[Input Node B: 0] ───┘                     │\n                                           ├───► [ OR Gate ] ───► TERMINAL OUTPUT?\n                                           │\n[Input Node C: 1] ───► [ NOT Gate ] ───────┘</pre></div>', unsafe_allow_html=True)
+        # Wrapped inside a true preformatted block container to freeze character positioning
+        st.markdown("""
+        <div class="display-block">
+            <span class="cipher-label" style="display:block; margin-bottom:10px;">Circuit Map:</span>
+            <pre class="ascii-art">
+[Input Node A: 1] ───┐
+                    ├───► [ AND Gate ] ───┐
+[Input Node B: 0] ───┘                     │
+                                           ├───► [ OR Gate ] ───► TERMINAL OUTPUT?
+                                           │
+[Input Node C: 1] ───► [ NOT Gate ] ───────┘</pre>
+        </div>
+        """, unsafe_allow_html=True)
         
         user_input = st.text_input("Enter the terminal bit registry output value (0 or 1):", key="in_2").strip()
         if st.button("VERIFY VOLTAGE LOGIC", key="b_2"):
@@ -212,14 +235,14 @@ with st.container(border=True):
                 st.session_state.stage = 3
                 st.rerun()
             else:
-                st.error("❌ Logic Check Fault: Circuit configuration loop detected. Output state unverified.")
+                st.error("❌ Logic Check Fault: Circuit configuration anomaly detected. Output state unverified.")
 
     # CHALLENGE 3: BINARY DECODER
     elif st.session_state.stage == 3:
         st.markdown('<div class="challenge-header"><strong>Challenge 3:</strong> <span>Core Hex/Binary Memory Trace</span></div>', unsafe_allow_html=True)
         st.write("The underlying storage sector is guarded by a 4-letter ASCII access phrase. Read the volatile system memory bank:")
         
-        st.markdown('<div style="background-color: #0d1421; padding: 12px 16px; border-radius: 6px; margin-bottom: 12px;"><span class="cipher-label">Registers:</span> <span class="cipher-value">[01000011]  [01001111]  [01000100]  [01000101]</span></div>', unsafe_allow_html=True)
+        st.markdown('<div class="display-block"><span class="cipher-label">Registers:</span> <span class="cipher-value">[01000011]  [01001111]  [01000100]  [01000101]</span></div>', unsafe_allow_html=True)
         
         st.caption("💡 Translation Manual: Array equivalents track to decimal positions: 67, 79, 68, 69. (Note: Upper-case letter 'A' maps to position index 65)")
         
@@ -236,7 +259,15 @@ with st.container(border=True):
         st.markdown('<div class="challenge-header"><strong>Challenge 4:</strong> <span>Diagnostic Script Compilation Fix</span></div>', unsafe_allow_html=True)
         st.write("The secondary firewall validation module has a minor syntax bug preventing launch. Fix the loop declaration syntax.")
         
-        st.markdown('<div style="background-color: #0d1421; padding: 12px 16px; border-radius: 6px; margin-bottom: 12px;"><span class="cipher-label">Source Code Trace:</span><br><pre style="color:#ffffff; margin:0;">\ndef check_password(password)\n    if len(password) < 8\n        print("Password flagged: Weak security profile.")</pre></div>', unsafe_allow_html=True)
+        st.markdown("""
+        <div class="display-block">
+            <span class="cipher-label" style="display:block; margin-bottom:10px;">Source Code Trace:</span>
+            <pre class="ascii-art" style="color: #a6b3cd !important;">
+def check_password(password)
+    if len(password) < 8
+        print("Password flagged: Weak security profile.")</pre>
+        </div>
+        """, unsafe_allow_html=True)
         
         user_input = st.text_input("Enter the missing token operator character from lines 1 and 2:", key="in_4").strip()
         if st.button("COMPILE SYNTAX OVERRIDE PATCH", key="b_4"):
@@ -251,7 +282,7 @@ with st.container(border=True):
         st.markdown('<div class="challenge-header"><strong>Challenge 5:</strong> <span>Database Query Isolation</span></div>', unsafe_allow_html=True)
         st.write("Isolate target entry anomalies from the core logs. Input the correct SQL keyword array statement to weed out redundant duplicate values.")
         
-        st.markdown('<div style="background-color: #0d1421; padding: 12px 16px; border-radius: 6px; margin-bottom: 12px;"><span class="cipher-label">Query Syntax:</span> <span class="cipher-value">SELECT ___________ client_ip FROM mainframe_security_logs;</span></div>', unsafe_allow_html=True)
+        st.markdown('<div class="display-block"><span class="cipher-label">Query Syntax:</span> <span class="cipher-value">SELECT ___________ client_ip FROM mainframe_security_logs;</span></div>', unsafe_allow_html=True)
         
         user_input = st.text_input("Complete the missing query operator pattern keyword string:", key="in_5", placeholder="Keyword...").strip().upper()
         if st.button("EXECUTE STRUCTURED DATA QUERY", key="b_5"):
