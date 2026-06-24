@@ -89,8 +89,9 @@ st.markdown("""
         color: #ffffff !important;
         font-family: 'Courier New', monospace !important;
         font-size: 16px !important;
-        line-height: 1.4 !important;
+        line-height: 1.5 !important;
         margin: 0 !important;
+        display: block !important;
         white-space: pre !important;
         overflow-x: auto;
     }
@@ -220,15 +221,18 @@ with st.container(border=True):
         st.markdown('<div class="challenge-header"><strong>Challenge 2:</strong> <span>Logic Circuit Topology Evaluation</span></div>', unsafe_allow_html=True)
         st.write("A power spike tripped the hardware safety relays. Calculate the end-terminal state of this logical path grid.")
         
-        st.markdown("""
-        <div class="display-block">
-            <span class="cipher-label">Circuit Map:</span>
-            <pre class="ascii-art">[Input Node A: 1] ───┐
+        # Fixed explicit layout formatting string alignment
+        circuit_art = """[Input Node A: 1] ───┐
                     ├───► [ AND Gate ] ───┐
 [Input Node B: 0] ───┘                     │
                                            ├───► [ OR Gate ] ───► TERMINAL OUTPUT?
                                            │
-[Input Node C: 1] ───► [ NOT Gate ] ───────┘</pre>
+[Input Node C: 1] ───► [ NOT Gate ] ───────┘"""
+
+        st.markdown(f"""
+        <div class="display-block">
+            <span class="cipher-label">Circuit Map:</span>
+            <pre class="ascii-art">{circuit_art}</pre>
         </div>
         """, unsafe_allow_html=True)
         
@@ -247,7 +251,7 @@ with st.container(border=True):
         
         st.markdown('<div class="display-block"><span class="cipher-label">Registers:</span><span class="cipher-value">[01000011]  [01001111]  [01000100]  [01000101]</span></div>', unsafe_allow_html=True)
         
-        st.caption("💡 Translation Manual: Array equivalents track to decimal positions: ##, ##, ##, ##. (Note: Upper-case letter 'A' maps to position index 65)")
+        st.caption("💡 Translation Manual: Array equivalents track to decimal positions: 67, 79, 68, 69. (Note: Upper-case letter 'A' maps to position index 65)")
         
         user_input = st.text_input("Translate extracted target string sequence:", key="in_3").strip().upper()
         if st.button("BYPASS MEMORY FIREWALL", key="b_3"):
@@ -262,12 +266,15 @@ with st.container(border=True):
         st.markdown('<div class="challenge-header"><strong>Challenge 4:</strong> <span>Diagnostic Script Compilation Fix</span></div>', unsafe_allow_html=True)
         st.write("The secondary firewall validation module has a minor syntax bug preventing launch. Fix the loop declaration syntax.")
         
-        st.markdown("""
+        # Raw block variables protect Python syntax formatting from collapsing
+        code_trace = """def check_password(password)
+    if len(password) < 8
+        print("Password flagged: Weak security profile.")"""
+
+        st.markdown(f"""
         <div class="display-block">
             <span class="cipher-label">Source Code Trace:</span>
-            <pre class="ascii-art">def check_password(password)
-    if len(password) < 8
-        print("Password flagged: Weak security profile.")</pre>
+            <pre class="ascii-art">{code_trace}</pre>
         </div>
         """, unsafe_allow_html=True)
         
