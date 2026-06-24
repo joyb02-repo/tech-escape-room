@@ -132,6 +132,12 @@ st.markdown("""
         box-shadow: 0 6px 20px rgba(168, 85, 247, 0.45) !important;
     }
     
+    /* Navigation Override for Proceed Steps */
+    .proceed-btn button {
+        background: linear-gradient(90deg, #10b981 0%, #059669 100%) !important;
+        color: white !important;
+    }
+    
     /* Highly Visible, Lighter Input Box Field */
     input {
         background-color: #3a4b68 !important;
@@ -150,9 +156,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Initialize Session Frame State Tracking
+# Initialize Session Frame States
 if "stage" not in st.session_state:
     st.session_state.stage = 1
+if "stage_complete" not in st.session_state:
+    st.session_state.stage_complete = False
 
 # Display Terminal Branding
 st.markdown('<h1 class="terminal-title">MAINFRAME BREACH</h1>', unsafe_allow_html=True)
@@ -192,13 +200,23 @@ with st.container(border=True):
         """)
         st.caption("🔍 Strategy: Trace the final string cluster (`Srzhu`) 3 steps backward through the alphabet space to find the access string key.")
         
-        user_input = st.text_input("Decrypt key word payload:", key="in_1", placeholder="Type response here...").strip().upper()
-        if st.button("EXECUTE HANDSHAKE UNLOCK", key="b_1"):
-            if user_input == "POWER" or check_hash(user_input, "2f8263cf8bb82ec7da117c2be6d11a8080f83359d48b1116c905327b73840e79"):
+        user_input = st.text_input("Decrypt key word payload:", key="in_1", placeholder="Type response here...", disabled=st.session_state.stage_complete).strip().upper()
+        
+        if not st.session_state.stage_complete:
+            if st.button("EXECUTE HANDSHAKE UNLOCK", key="b_1"):
+                if user_input == "POWER" or check_hash(user_input, "2f8263cf8bb82ec7da117c2be6d11a8080f83359d48b1116c905327b73840e79"):
+                    st.session_state.stage_complete = True
+                    st.rerun()
+                else:
+                    st.error("❌ Incorrect answer. Please try again.")
+        else:
+            st.success("✅ Correct answer!")
+            st.markdown('<div class="proceed-btn">', unsafe_allow_html=True)
+            if st.button("PROCEED TO NEXT TERMINAL ➔", key="p_1"):
                 st.session_state.stage = 2
+                st.session_state.stage_complete = False
                 st.rerun()
-            else:
-                st.error("❌ Handshake Rejected: Invalid encryption signature decryption mapping sequence.")
+            st.markdown('</div>', unsafe_allow_html=True)
 
     # CHALLENGE 2: LOGIC GATE TOPOLOGY
     elif st.session_state.stage == 2:
@@ -208,13 +226,23 @@ with st.container(border=True):
         st.markdown('<span class="cipher-label">Circuit Map:</span>', unsafe_allow_html=True)
         st.code("[Input Node A: 1] ───┐\n                    ├───► [ AND Gate ] ───┐\n[Input Node B: 0] ───┘                     │\n                                           ├───► [ OR Gate ] ───► TERMINAL OUTPUT?\n                                           │\n[Input Node C: 1] ───► [ NOT Gate ] ───────┘", language="text")
         
-        user_input = st.text_input("Enter the terminal bit registry output value (0 or 1):", key="in_2").strip()
-        if st.button("VERIFY VOLTAGE LOGIC", key="b_2"):
-            if user_input == "0" or check_hash(user_input, "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"):
+        user_input = st.text_input("Enter the terminal bit registry output value (0 or 1):", key="in_2", disabled=st.session_state.stage_complete).strip()
+        
+        if not st.session_state.stage_complete:
+            if st.button("VERIFY VOLTAGE LOGIC", key="b_2"):
+                if user_input == "0" or check_hash(user_input, "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"):
+                    st.session_state.stage_complete = True
+                    st.rerun()
+                else:
+                    st.error("❌ Incorrect answer. Please try again.")
+        else:
+            st.success("✅ Correct answer!")
+            st.markdown('<div class="proceed-btn">', unsafe_allow_html=True)
+            if st.button("PROCEED TO NEXT TERMINAL ➔", key="p_2"):
                 st.session_state.stage = 3
+                st.session_state.stage_complete = False
                 st.rerun()
-            else:
-                st.error("❌ Logic Check Fault: Circuit configuration anomaly detected. Output state unverified.")
+            st.markdown('</div>', unsafe_allow_html=True)
 
     # CHALLENGE 3: BINARY DECODER
     elif st.session_state.stage == 3:
@@ -226,13 +254,23 @@ with st.container(border=True):
         
         st.caption("💡 Translation Manual: Array equivalents track to decimal positions: 67, 79, 68, 69. (Note: Upper-case letter 'A' maps to position index 65)")
         
-        user_input = st.text_input("Translate extracted target string sequence:", key="in_3").strip().upper()
-        if st.button("BYPASS MEMORY FIREWALL", key="b_3"):
-            if user_input == "CODE" or check_hash(user_input, "9a661b0a52df03aa6240292797e88f00072b49c001cbe3d007ec1dfb1b60f588"):
+        user_input = st.text_input("Translate extracted target string sequence:", key="in_3", disabled=st.session_state.stage_complete).strip().upper()
+        
+        if not st.session_state.stage_complete:
+            if st.button("BYPASS MEMORY FIREWALL", key="b_3"):
+                if user_input == "CODE" or check_hash(user_input, "9a661b0a52df03aa6240292797e88f00072b49c001cbe3d007ec1dfb1b60f588"):
+                    st.session_state.stage_complete = True
+                    st.rerun()
+                else:
+                    st.error("❌ Incorrect answer. Please try again.")
+        else:
+            st.success("✅ Correct answer!")
+            st.markdown('<div class="proceed-btn">', unsafe_allow_html=True)
+            if st.button("PROCEED TO NEXT TERMINAL ➔", key="p_3"):
                 st.session_state.stage = 4
+                st.session_state.stage_complete = False
                 st.rerun()
-            else:
-                st.error("❌ Character Check Mismatch: Data stream corruption flagged inside sector validation tables.")
+            st.markdown('</div>', unsafe_allow_html=True)
 
     # CHALLENGE 4: BUG HUNTING
     elif st.session_state.stage == 4:
@@ -242,13 +280,23 @@ with st.container(border=True):
         st.markdown('<span class="cipher-label">Source Code Trace:</span>', unsafe_allow_html=True)
         st.code("def check_password(password)\n    if len(password) < 8\n        print(\"Password flagged: Weak security profile.\")", language="python")
         
-        user_input = st.text_input("Enter the missing token operator character from lines 1 and 2:", key="in_4").strip()
-        if st.button("COMPILE SYNTAX OVERRIDE PATCH", key="b_4"):
-            if user_input == ":" or check_hash(user_input, "76f0d14b4369a473468087920bb6148303f8fcb151bf99994c979cf7b198889a"):
+        user_input = st.text_input("Enter the missing token operator character from lines 1 and 2:", key="in_4", disabled=st.session_state.stage_complete).strip()
+        
+        if not st.session_state.stage_complete:
+            if st.button("COMPILE SYNTAX OVERRIDE PATCH", key="b_4"):
+                if user_input == ":" or check_hash(user_input, "76f0d14b4369a473468087920bb6148303f8fcb151bf99994c979cf7b198889a"):
+                    st.session_state.stage_complete = True
+                    st.rerun()
+                else:
+                    st.error("❌ Incorrect answer. Please try again.")
+        else:
+            st.success("✅ Correct answer!")
+            st.markdown('<div class="proceed-btn">', unsafe_allow_html=True)
+            if st.button("PROCEED TO NEXT TERMINAL ➔", key="p_4"):
                 st.session_state.stage = 5
+                st.session_state.stage_complete = False
                 st.rerun()
-            else:
-                st.error("❌ Script Error: Interpreter execution thread crashed. Review structural delimiter markers.")
+            st.markdown('</div>', unsafe_allow_html=True)
 
     # CHALLENGE 5: SQL STRUCTURE
     elif st.session_state.stage == 5:
@@ -258,26 +306,46 @@ with st.container(border=True):
         st.markdown('<span class="cipher-label">Query Syntax:</span>', unsafe_allow_html=True)
         st.code("SELECT ___________ client_ip FROM mainframe_security_logs;", language="sql")
         
-        user_input = st.text_input("Complete the missing query operator pattern keyword string:", key="in_5", placeholder="Keyword...").strip().upper()
-        if st.button("EXECUTE STRUCTURED DATA QUERY", key="b_5"):
-            if user_input == "DISTINCT" or check_hash(user_input, "601e3895bd97ff645e9987a0709b456db97f8c057692095b6a71e1f74463402e"):
+        user_input = st.text_input("Complete the missing query operator pattern keyword string:", key="in_5", placeholder="Keyword...", disabled=st.session_state.stage_complete).strip().upper()
+        
+        if not st.session_state.stage_complete:
+            if st.button("EXECUTE STRUCTURED DATA QUERY", key="b_5"):
+                if user_input == "DISTINCT" or check_hash(user_input, "601e3895bd97ff645e9987a0709b456db97f8c057692095b6a71e1f74463402e"):
+                    st.session_state.stage_complete = True
+                    st.rerun()
+                else:
+                    st.error("❌ Incorrect answer. Please try again.")
+        else:
+            st.success("✅ Correct answer!")
+            st.markdown('<div class="proceed-btn">', unsafe_allow_html=True)
+            if st.button("PROCEED TO NEXT TERMINAL ➔", key="p_5"):
                 st.session_state.stage = 6
+                st.session_state.stage_complete = False
                 st.rerun()
-            else:
-                st.error("❌ Data Layer Exception: Command execution returned duplicate relational vectors.")
+            st.markdown('</div>', unsafe_allow_html=True)
 
     # CHALLENGE 6: SUBNET DNS PROTOCOLS
     elif st.session_state.stage == 6:
         st.markdown('<div class="challenge-header"><strong>Challenge 6:</strong> <span>Network Layer Protocol Mapping</span></div>', unsafe_allow_html=True)
         st.write("Complete the external routing handshake. Identify which backbone system structure protocol translates dynamic domain text addresses into clean numeric computer IP strings.")
         
-        user_input = st.text_input("Enter the 3-letter networking acronym standard protocol:", key="in_6", placeholder="e.g. BGP, ARP...").strip().upper()
-        if st.button("TERMINATE ROOT ROUTING HANDSHAKE", key="b_6"):
-            if user_input == "DNS" or check_hash(user_input, "e5b72195f22e700cf1cb765f606e10885e35e7df5d1bf25577609278065c711a"):
+        user_input = st.text_input("Enter the 3-letter networking acronym standard protocol:", key="in_6", placeholder="e.g. BGP, ARP...", disabled=st.session_state.stage_complete).strip().upper()
+        
+        if not st.session_state.stage_complete:
+            if st.button("TERMINATE ROOT ROUTING HANDSHAKE", key="b_6"):
+                if user_input == "DNS" or check_hash(user_input, "e5b72195f22e700cf1cb765f606e10885e35e7df5d1bf25577609278065c711a"):
+                    st.session_state.stage_complete = True
+                    st.rerun()
+                else:
+                    st.error("❌ Incorrect answer. Please try again.")
+        else:
+            st.success("✅ Correct answer!")
+            st.markdown('<div class="proceed-btn">', unsafe_allow_html=True)
+            if st.button("FINISH CHALLENGE 🏁", key="p_6"):
                 st.session_state.stage = 7
+                st.session_state.stage_complete = False
                 st.rerun()
-            else:
-                st.error("❌ Subnet Routing Failure: Destination host path string target unresolved.")
+            st.markdown('</div>', unsafe_allow_html=True)
 
     # ESCAPE SUCCESS TERMINAL MODULE
     elif st.session_state.stage == 7:
@@ -287,4 +355,5 @@ with st.container(border=True):
         
         if st.button("RESET SIMULATOR COLD-BOOT MATRIX 🔁"):
             st.session_state.stage = 1
+            st.session_state.stage_complete = False
             st.rerun()
