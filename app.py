@@ -49,6 +49,26 @@ st.markdown("""
         border: 2px solid #00f3ff !important;
     }
     
+    /* Custom Challenge Header Styles */
+    .challenge-header {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 1.7rem;
+        color: #ffffff;
+        margin-bottom: 15px;
+    }
+    .challenge-header strong {
+        font-weight: 800 !important;
+    }
+    .challenge-header span {
+        font-weight: 400 !important;
+    }
+
+    /* Fixed Padding Gaps for Code/Text Blocks */
+    div[data-testid="stCodeBlock"] {
+        margin-bottom: 0px !important;
+        padding-bottom: 0px !important;
+    }
+    
     /* Sleek Horizontal Navigation System */
     .progress-banner {
         display: flex;
@@ -81,7 +101,7 @@ st.markdown("""
         border: 1px solid rgba(168, 85, 247, 0.35);
     }
 
-    /* Beautiful High-Contrast Buttons */
+    /* High-Contrast Action Buttons */
     .stButton>button {
         background: linear-gradient(90deg, #00f3ff 0%, #a855f7 100%) !important;
         color: #05070c !important;
@@ -102,15 +122,20 @@ st.markdown("""
         box-shadow: 0 6px 20px rgba(168, 85, 247, 0.45) !important;
     }
     
-    /* Styled Input Panels */
+    /* Significantly Brighter Input Text Box Fields */
     input {
-        background-color: #0d1421 !important;
+        background-color: #2a374e !important;
         color: #ffffff !important;
-        border: 1px solid #2d3f5e !important;
+        border: 1px solid #3d5275 !important;
         border-radius: 6px !important;
+        font-size: 15px !important;
     }
     input:focus {
         border-color: #00f3ff !important;
+        background-color: #31415c !important;
+    }
+    div[data-testid="stTextInput"] {
+        margin-top: 5px !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -139,17 +164,14 @@ st.markdown(banner_html, unsafe_allow_html=True)
 
 # =========================================================================
 # CENTRALIZED SECURE CONTAINER 
-# Locks all active challenge parameters into your specified bounding layout box.
 # =========================================================================
 with st.container(border=True):
 
     # CHALLENGE 1: CAESAR CIPHER VARIANT
     if st.session_state.stage == 1:
-        st.markdown("### **Challenge 1:** Encryption Matrix Override")
+        st.markdown('<div class="challenge-header"><strong>Challenge 1:</strong> <span>Encryption Matrix Override</span></div>', unsafe_allow_html=True)
         st.write("An intercepted system log contains a shifted string payload. Reconstruct the cipher framework to bypass.")
-        st.code("""
-Cipher text: Wkh sdvvzrug lv Srzhu
-        """, language="text")
+        st.code("""Cipher text: Wkh sdvvzrug lv Srzhu""", language="text")
         
         st.markdown("""
         **Operational Diagnostic Feed:**
@@ -168,7 +190,7 @@ Cipher text: Wkh sdvvzrug lv Srzhu
 
     # CHALLENGE 2: LOGIC GATE TOPOLOGY
     elif st.session_state.stage == 2:
-        st.markdown("### **Challenge 2:** Logic Circuit Topology Evaluation")
+        st.markdown('<div class="challenge-header"><strong>Challenge 2:</strong> <span>Logic Circuit Topology Evaluation</span></div>', unsafe_allow_html=True)
         st.write("A power spike tripped the hardware safety relays. Calculate the end-terminal state of this logical path grid.")
         st.code("""
 [Input Node A: 1] ───┐
@@ -189,11 +211,9 @@ Cipher text: Wkh sdvvzrug lv Srzhu
 
     # CHALLENGE 3: BINARY DECODER
     elif st.session_state.stage == 3:
-        st.markdown("### **Challenge 3:** Core Hex/Binary Memory Trace")
+        st.markdown('<div class="challenge-header"><strong>Challenge 3:</strong> <span>Core Hex/Binary Memory Trace</span></div>', unsafe_allow_html=True)
         st.write("The underlying storage sector is guarded by a 4-letter ASCII access phrase. Read the volatile system memory bank:")
-        st.code("""
-Registers: [01000011]  [01001111]  [01000100]  [01000101]
-        """, language="text")
+        st.code("""Registers: [01000011]  [01001111]  [01000100]  [01000101]""", language="text")
         st.caption("💡 Translation Manual: Array equivalents track to decimal positions: 67, 79, 68, 69. (Note: Upper-case letter 'A' maps to position index 65)")
         
         user_input = st.text_input("Translate extracted target string sequence:", key="in_3").strip().upper()
@@ -206,7 +226,7 @@ Registers: [01000011]  [01001111]  [01000100]  [01000101]
 
     # CHALLENGE 4: BUG HUNTING
     elif st.session_state.stage == 4:
-        st.markdown("### **Challenge 4:** Diagnostic Script Compilation Fix")
+        st.markdown('<div class="challenge-header"><strong>Challenge 4:</strong> <span>Diagnostic Script Compilation Fix</span></div>', unsafe_allow_html=True)
         st.write("The secondary firewall validation module has a minor syntax bug preventing launch. Fix the loop declaration syntax.")
         st.code("""
 def check_password(password)
@@ -224,11 +244,9 @@ def check_password(password)
 
     # CHALLENGE 5: SQL STRUCTURE
     elif st.session_state.stage == 5:
-        st.markdown("### **Challenge 5:** Database Query Isolation")
+        st.markdown('<div class="challenge-header"><strong>Challenge 5:</strong> <span>Database Query Isolation</span></div>', unsafe_allow_html=True)
         st.write("Isolate target entry anomalies from the core logs. Input the correct SQL keyword array statement to weed out redundant duplicate values.")
-        st.code("""
-SELECT ___________ client_ip FROM mainframe_security_logs;
-        """, language="sql")
+        st.code("""SELECT ___________ client_ip FROM mainframe_security_logs;""", language="sql")
         
         user_input = st.text_input("Complete the missing query operator pattern keyword string:", key="in_5", placeholder="Keyword...").strip().upper()
         if st.button("EXECUTE STRUCTURED DATA QUERY", key="b_5"):
@@ -240,7 +258,7 @@ SELECT ___________ client_ip FROM mainframe_security_logs;
 
     # CHALLENGE 6: SUBNET DNS PROTOCOLS
     elif st.session_state.stage == 6:
-        st.markdown("### **Challenge 6:** Network Layer Protocol Mapping")
+        st.markdown('<div class="challenge-header"><strong>Challenge 6:</strong> <span>Network Layer Protocol Mapping</span></div>', unsafe_allow_html=True)
         st.write("Complete the external routing handshake. Identify which backbone system structure protocol translates dynamic domain text addresses into clean numeric computer IP strings.")
         
         user_input = st.text_input("Enter the 3-letter networking acronym standard protocol:", key="in_6", placeholder="e.g. BGP, ARP, SSH...").strip().upper()
