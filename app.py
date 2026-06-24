@@ -1,236 +1,245 @@
-import streamlit as st
-import hashlib
-
-# One-way hashing checker engine
-def check_hash(user_input, correct_hash):
-    scrambled_input = hashlib.sha256(user_input.strip().upper().encode()).hexdigest()
-    return scrambled_input == correct_hash
-
-# Page setup
-st.set_page_config(page_title="Cyber Defense Escape Room", page_icon="⚡", layout="centered")
-
-# Sleek, unified modern terminal styling
-st.markdown("""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout (Version 1.0.4 FINAL RUN)</title>
     <style>
-    /* Dark Minimalist Background */
-    .stApp {
-        background-color: #0b0f17;
-    }
-    
-    /* Neon Terminal Typography */
-    .terminal-title {
-        color: #00f3ff;
-        font-family: 'Courier New', monospace;
-        text-align: center;
-        font-weight: 800;
-        text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
-        margin-bottom: 2px;
-    }
-    .terminal-subtitle {
-        color: #788296;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        text-align: center;
-        font-size: 13px;
-        margin-bottom: 20px;
-    }
-    
-    /* Force Streamlit's native container to match our dark glassmorphic layout */
-    div[data-testid="stVerticalBlockBorderWithDetails"] {
-        background-color: rgba(17, 24, 39, 0.85) !important;
-        border: 1px solid rgba(0, 243, 255, 0.25) !important;
-        border-radius: 12px !important;
-        padding: 26px !important;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
-    }
-    
-    /* Navigation Step Progress Badges */
-    .progress-banner {
-        display: flex;
-        justify-content: space-between;
-        gap: 6px;
-        margin-bottom: 25px;
-        font-family: 'Courier New', monospace;
-        font-size: 11px;
-    }
-    .progress-node {
-        flex: 1;
-        text-align: center;
-        padding: 6px 4px;
-        border-radius: 6px;
-        background: #141b29;
-        color: #4b5563;
-        border: 1px solid #1f2937;
-    }
-    .progress-node.active {
-        background: rgba(0, 243, 255, 0.1);
-        color: #00f3ff;
-        border: 1px solid #00f3ff;
-        box-shadow: 0 0 8px rgba(0, 243, 255, 0.15);
-    }
-    .progress-node.complete {
-        background: rgba(168, 85, 247, 0.08);
-        color: #a855f7;
-        border: 1px solid rgba(168, 85, 247, 0.4);
-    }
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&family=Impact&display=swap');
 
-    /* Vibrant UI Custom Buttons */
-    .stButton>button {
-        background: linear-gradient(90deg, #00f3ff 0%, #a855f7 100%) !important;
-        color: #000000 !important;
-        font-weight: 700 !important;
-        letter-spacing: 0.5px !important;
-        border: none !important;
-        border-radius: 6px !important;
-        padding: 10px 20px !important;
-        font-family: 'Courier New', monospace !important;
-        width: 100% !important;
-        transition: all 0.2s ease-in-out !important;
-    }
-    .stButton>button:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: 0 4px 15px 0 rgba(168, 85, 247, 0.4) !important;
-    }
+        body {
+            background-color: #F0FDF4; /* Weak sickly green background that clashes with purple/yellow */
+            font-family: 'Comic Neue', cursive;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .checkout-container {
+            background: #FFFFFF;
+            border: 5px double #000000;
+            border-radius: 0px; /* Sharp uncomfortable edges */
+            width: 100%;
+            max-width: 550px;
+            padding: 30px;
+            box-shadow: 10px 10px 0px #000000; /* Harsh heavy shadow */
+        }
+
+        /* Fake Placeholder Logo to stand in for your file */
+        .fake-logo {
+            font-family: 'Impact', sans-serif;
+            font-size: 32px;
+            color: #9333EA; /* Theme Purple */
+            text-align: center;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        /* Terribly aggressive warning banner */
+        .bad-banner {
+            background-color: #FFDE59; /* Neon Yellow */
+            border: 3px dashed #FF3131; /* Bright Red */
+            padding: 15px;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .bad-banner h2 {
+            color: #0000FF; /* Pure saturated Blue */
+            font-size: 18px;
+            margin: 0 0 8px 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .bad-banner p {
+            color: #FF3131;
+            font-size: 13px;
+            margin: 4px 0;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        h3 {
+            color: #000000;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 5px;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .cart-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        /* Intentionally messy, unaligned layout form elements */
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 4px;
+            color: #1E293B;
+        }
+
+        .form-group input, .form-group select {
+            width: 95%;
+            padding: 8px;
+            border: 2px solid #334155;
+            font-family: 'Comic Neue', cursive;
+            background-color: #FFFBEB; /* Off-color input backgrounds */
+        }
+
+        /* Confusing 3-column split for expiry data with labels inside placeholder text */
+        .triple-row {
+            display: flex;
+            gap: 5px;
+            width: 99%;
+        }
+
+        .triple-row input {
+            width: 83%;
+        }
+
+        /* Tiny sneaky text layout hidden at the bottom */
+        .sneaky-checkboxes {
+            margin-top: 20px;
+            background: #F8FAFC;
+            padding: 10px;
+            border: 1px solid #CBD5E1;
+        }
+
+        .sneaky-checkboxes label {
+            display: flex;
+            align-items: flex-start;
+            font-size: 9px; /* Microscopic font size */
+            color: #64748B;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .sneaky-checkboxes input {
+            margin-right: 8px;
+            margin-top: 1px;
+        }
+
+        /* Completely broken button hierarchy */
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            font-family: 'Comic Neue', cursive;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            text-transform: uppercase;
+        }
+
+        /* Cancel is big, beautiful, and draws all attention */
+        .btn-cancel {
+            background-color: #0000FF;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 255, 0.3);
+        }
+
+        /* actual purchase button is tiny, muted, lowercase, and looks broken/disabled */
+        .btn-submit {
+            background-color: #E2E8F0;
+            color: #94A3B8;
+            border: 1px solid #CBD5E1;
+            font-size: 11px;
+        }
     </style>
-""", unsafe_allow_html=True)
+</head>
+<body>
 
-# Initialize game stage configuration 
-if "stage" not in st.session_state:
-    st.session_state.stage = 1
+<div class="checkout-container">
+    
+    <div class="fake-logo">Shark Tank</div>
 
-# Header Identity Elements
-st.markdown('<h1 class="terminal-title">⚡ MAINFRAME BREACH</h1>', unsafe_allow_html=True)
-st.markdown('<p class="terminal-subtitle">Secured Security Architecture Diagnostic Suite v3.2.6</p>', unsafe_allow_html=True)
+    <div class="bad-banner">
+        <h2>⚠️ SYSTEM LOCKED BY SYSTEM ADMINISTRATOR</h2>
+        <p><strong>SECURITY CIPHER:</strong> <span style="font-family: monospace; font-size: 15px; background: white; padding: 2px 6px; border: 1px solid black; color: black;">Wkh sdvvzrug lv Srzhu</span></p>
+        <p><strong>HINT 1:</strong> The shift key algorithm used to lock this screen is '3'.</p>
+        <p><strong>HINT 2:</strong> The third character of the decrypted text string resolves to the letter 'e'.</p>
+    </div>
 
-# Navigation Step Progress Bar
-nodes = ["Cryptogram", "Circuitry", "Binary", "Debugging", "Data Schema", "Network"]
-banner_html = '<div class="progress-banner">'
-for i, name in enumerate(nodes, 1):
-    status_class = "progress-node"
-    if st.session_state.stage == i:
-        status_class += " active"
-    elif st.session_state.stage > i:
-        status_class += " complete"
-    banner_html += f'<div class="{status_class}">S{i}</div>'
-banner_html += '</div>'
-st.markdown(banner_html, unsafe_allow_html=True)
+    <h3>Your Items</h3>
+    <div class="cart-row">
+        <span>Premium Ultra-Soft Gaming Socks (Size: Random)</span>
+        <strong>$89.99</strong>
+    </div>
 
+    <h3>Delivery & Financial Data Entry</h3>
+    
+    <div class="form-group">
+        <label>Enter Country First</label>
+        <input type="text" value="Worldwide">
+    </div>
 
-# =========================================================================
-# CENTRALIZED SECURE CONTAINER 
-# All challenge activity renders directly inside this unified element
-# =========================================================================
-with st.container(border=True):
+    <div class="form-group">
+        <label>Type everything here (First Name, Middle, Last Name, Title, Apartment Number)</label>
+        <input type="text" placeholder="Johnathan Doe Esq Apt 4B...">
+    </div>
 
-    # CHALLENGE 1
-    if st.session_state.stage == 1:
-        st.subheader("🔒 Challenge 1: Cipher Matrix Decryption")
-        st.write("An anonymous proxy node left an encrypted intercept packet. Reconstruct the alphabet mapping array.")
-        st.code("""
-Cipher text: X S B   P S Q O W   G T   W S Q O T H U   G S P   S Q P P T H U 
+    <div class="form-group">
+        <label>Select Payment Method Type</label>
+        <select>
+            <option>- Select One -</option>
+            <option>Crypto Token</option>
+            <option>Gift Voucher Code</option>
+            <option>Standard Credit Card</option>
+            <option>Bank Wire transfer</option>
+        </select>
+    </div>
 
-Decoder Array: X=T, S=H, B=E, P=P, O=O, W=W, G=S, T=I, U=G, H=N
-        """, language="text")
-        st.caption("🔍 Strategy: Decode the second word string block (`P S Q O W`) to find the bypass key.")
-        
-        user_input = st.text_input("Decrypt key word payload:", key="in_1", placeholder="Type response here...").strip().upper()
-        if st.button("EXECUTE HANDSHAKE UNLOCK 🔓", key="b_1"):
-            if user_input == "POWER" or check_hash(user_input, "2f8263cf8bb82ec7da117c2be6d11a8080f83359d48b1116c905327b73840e79"):
-                st.session_state.stage = 2
-                st.rerun()
-            else:
-                st.error("❌ Handshake Rejected: Invalid encryption signature decryption.")
+    <div class="form-group">
+        <label>Type your 16 digit card number out loud (No spaces allowed)</label>
+        <input type="text" placeholder="4111222233334444">
+    </div>
 
-    # CHALLENGE 2
-    elif st.session_state.stage == 2:
-        st.subheader("🧩 Challenge 2: Logic Circuit Topology Evaluation")
-        st.write("A power surge tripped the internal safety relay architecture. Compute the end result bit stream state below.")
-        st.code("""
-[Input Node A: 1] ───┐
-                    ├───► [ AND Gate ] ───┐
-[Input Node B: 0] ───┘                     │
-                                           ├───► [ OR Gate ] ───► TERMINAL OUTPUT?
-                                           │
-[Input Node C: 1] ───► [ NOT Gate ] ───────┘
-        """, language="text")
-        
-        user_input = st.text_input("Enter the terminal bit registry output value (0 or 1):", key="in_2").strip()
-        if st.button("VERIFY VOLTAGE LOGIC 🔓", key="b_2"):
-            if user_input == "0" or check_hash(user_input, "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"):
-                st.session_state.stage = 3
-                st.rerun()
-            else:
-                st.error("❌ Logic Check Fault: Circuit configuration loop detected.")
+    <div class="form-group">
+        <label>Expirations & Back Codes</label>
+        <div class="triple-row">
+            <input type="text" placeholder="Month (MM)">
+            <input type="text" placeholder="Year (YYYY)">
+            <input type="text" placeholder="Secret Code">
+        </div>
+    </div>
 
-    # CHALLENGE 3
-    elif st.session_state.stage == 3:
-        st.subheader("💾 Challenge 3: Core Hex/Binary Memory Trace")
-        st.write("The secondary firewall folder requires a 4-character ASCII access string phrase. Extract the hidden bytes:")
-        st.code("""
-Registers: [01000011]  [01001111]  [01000100]  [01000101]
-        """, language="text")
-        st.caption("💡 Reference Dictionary: Decimal equivalents: 67, 79, 68, 69. (Note: Upper-case letter 'A' matches index 65)")
-        
-        user_input = st.text_input("Translate extracted target string sequence:", key="in_3").strip().upper()
-        if st.button("BYPASS MEMORY FIREWALL 🔓", key="b_3"):
-            if user_input == "CODE" or check_hash(user_input, "9a661b0a52df03aa6240292797e88f00072b49c001cbe3d007ec1dfb1b60f588"):
-                st.session_state.stage = 4
-                st.rerun()
-            else:
-                st.error("❌ Character Check Mismatch: Corruption signature detected inside tracking arrays.")
+    <div class="sneaky-checkboxes">
+        <label>
+            <input type="checkbox" checked>
+            Sign me up for the weekly magazine and share my physical home address with trusted third-party marketing affiliates.
+        </label>
+        <label>
+            <input type="checkbox" checked>
+            Automatically renew this ordering attempt as a monthly recurring subscription fee of $89.99 without notifying my email.
+        </label>
+    </div>
 
-    # CHALLENGE 4
-    elif st.session_state.stage == 4:
-        st.subheader("🐛 Challenge 4: Diagnostic Script Compilation Fix")
-        st.write("The authentication loop checker program contains a missing punctuation syntax flaw. Patch the file script execution anomaly.")
-        st.code("""
-def check_password(password)
-    if len(password) < 8
-        print("Password flagged: Weak security index profile.")
-        """, language="python")
-        
-        user_input = st.text_input("Enter the single character token symbol missing from lines 1 and 2:", key="in_4").strip()
-        if st.button("COMPILE SYNTAX OVERRIDE PATCH 🔓", key="b_4"):
-            if user_input == ":" or check_hash(user_input, "76f0d14b4369a473468087920bb6148303f8fcb151bf99994c979cf7b198889a"):
-                st.session_state.stage = 5
-                st.rerun()
-            else:
-                st.error("❌ Script Error: Interpreter output returned a runtime compilation failure.")
+    <div class="button-container">
+        <button class="btn btn-cancel">CANCEL ORDER AND ERASE ALL HISTORY</button>
+        <button class="btn btn-submit">submit data</button>
+    </div>
 
-    # CHALLENGE 5
-    elif st.session_state.stage == 5:
-        st.subheader("🗄️ Challenge 5: Database Query Isolation")
-        st.write("The table schema contains an authentication block list. Identify the command keyword required to isolate unique un-duplicated records.")
-        st.code("""
-SELECT ___________ client_ip FROM mainframe_security_logs;
-        """, language="sql")
-        
-        user_input = st.text_input("Complete the missing SQL keyword pattern string:", key="in_5", placeholder="Keyword...").strip().upper()
-        if st.button("EXECUTE STRUCTURED DATA QUERY 🔓", key="b_5"):
-            if user_input == "DISTINCT" or check_hash(user_input, "601e3895bd97ff645e9987a0709b456db97f8c057692095b6a71e1f74463402e"):
-                st.session_state.stage = 6
-                st.rerun()
-            else:
-                st.error("❌ Command Exception: Syntax indexing returned duplicate row sets.")
+</div>
 
-    # CHALLENGE 6
-    elif st.session_state.stage == 6:
-        st.subheader("🌐 Challenge 6: Network Layer Protocol Mapping")
-        st.write("Confirm which networking layer core system protocol translates dynamic domain URL name links into structured numerical destination IP addresses.")
-        
-        user_input = st.text_input("Enter the 3-letter acronym designator string:", key="in_6", placeholder="e.g. FTP, SSL...").strip().upper()
-        if st.button("TERMINATE ROOT ROUTING HANDSHAKE 🔓", key="b_6"):
-            if user_input == "DNS" or check_hash(user_input, "e5b72195f22e700cf1cb765f606e10885e35e7df5d1bf25577609278065c711a"):
-                st.session_state.stage = 7
-                st.rerun()
-            else:
-                st.error("❌ Routing Failure: Destination resolving host name unverified.")
-
-    # ESCAPE SUCCESS TERMINAL
-    elif st.session_state.stage == 7:
-        st.balloons()
-        st.markdown("<h3 style='color:#00f3ff; font-family:\"Courier New\", monospace; text-align: center;'>[🎉 ACCESS GRANTED]</h3>", unsafe_allow_html=True)
-        st.write("Fantastic work, Agent. You verified the circuitry maps, patched compiler errors, decoupled the query layer data logs, and successfully broke out of the mainframe.")
-        
-        if st.button("RESET MATRIX NETWORK HANDSHAKER 🔁"):
-            st.session_state.stage = 1
-            st.rerun()
+</body>
+</html>
