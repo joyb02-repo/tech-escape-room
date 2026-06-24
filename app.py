@@ -247,7 +247,7 @@ with st.container(border=True):
         
         st.markdown('<div class="display-block"><span class="cipher-label">Registers:</span><span class="cipher-value">[01000011]  [01001111]  [01000100]  [01000101]</span></div>', unsafe_allow_html=True)
         
-        st.caption("💡 Translation Manual: Array equivalents track to decimal positions: 67, 79, 68, 69. (Note: Upper-case letter 'A' maps to position index 65)")
+        st.caption("💡 Translation Manual: Array equivalents track to decimal positions: ##, ##, ##, ##. (Note: Upper-case letter 'A' maps to position index 65)")
         
         user_input = st.text_input("Translate extracted target string sequence:", key="in_3").strip().upper()
         if st.button("BYPASS MEMORY FIREWALL", key="b_3"):
